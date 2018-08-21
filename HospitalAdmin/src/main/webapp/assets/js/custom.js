@@ -5,7 +5,7 @@ $(document).ready(function(){
 		// menu left side
 		$("#menu_tgl_btn").click(function(){
 			$("#id_body").toggleClass('hide_menu');
-			$(this).find("i").toggleClass("fa-outdent fa-indent");
+			$(this).find("i").toggleClass("fa-indent fa-outdent");
 		});
 		// Menu
 		$(".left_sub_menu").hide(); 

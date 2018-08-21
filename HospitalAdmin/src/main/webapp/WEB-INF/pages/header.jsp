@@ -7,8 +7,12 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-12 col-sm-6">
+						
 						<div class="logo_section">
-							<span>Harbor Admin</span>
+							<div class="head_left_section" id="menu_tgl_btn">
+								<i class="fa fa-outdent"></i>
+							</div>
+							<span>Admin Panel</span>
 						</div>
 					</div>
 					<div class="col-12 col-sm-6">
@@ -24,10 +28,7 @@
 
 		<!-- Fixed Left Menu start -->
 		<div class="left_header_section">
-
-			<div class="head_left_section" id="menu_tgl_btn">
-				<i class="fa fa-indent"></i>
-			</div>
+			
 			<div class="menu_blank_sect"></div>
 			<ul class="left_nav_menu">
 				<li><a href="index.html"><i class="fa fa-tachometer"></i>

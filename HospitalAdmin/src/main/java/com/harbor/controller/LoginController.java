@@ -51,14 +51,10 @@ public class LoginController {
 		// Use Service
 		result = loginservice.verifyUser(logindto);
 		System.out.println(result);
-	if(result.equalsIgnoreCase("success")) {
-		res.sendRedirect("/home.html");
-			
-			pw.println("<p> suceess</p>");
+		if(result.equalsIgnoreCase("success")) {
+			return "redirect:home.html";
 		}
-		pw.println("<p> fail</p>");
-		map.put("result", result);		
-		
+		map.put("result", result);			
 		return "login";
 	}
 	
