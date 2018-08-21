@@ -13,26 +13,23 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		
+
 		RequestDispatcher rd = null;
 		System.out.println("Request URL::" + request.getRequestURL().toString());
-		/*System.out.println(request.getRealPath("home.html"));
-		if(request.getRealPath("home.html").equals("home.html")) {
+		System.out.println(request.getRealPath("home"));
+		if (request.getRealPath("home").equals("home")) {
 			String result = (String) request.getAttribute("result");
-			
+
 			if (result.equals("success")) {
 				System.out.println("home page");
 				rd = request.getRequestDispatcher("home.html");
 				rd.forward(request, response);
-				
-			}else {
-				
+
+			} else {
 				rd = request.getRequestDispatcher("login.html");
 			}
-		*/	
+
 		}
 	}
-	
-	
-	
 
+}

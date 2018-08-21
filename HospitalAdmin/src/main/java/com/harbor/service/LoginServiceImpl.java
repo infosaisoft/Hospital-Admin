@@ -26,7 +26,9 @@ public class LoginServiceImpl implements LoginService {
 		// Use DAO
 		
 		count = logindao.loginUser(loginbo);
-		
+		String admin_id=loginbo.getAdmin_id();
+		logindto.setAdmin_id(admin_id);
+		logindto.setHid(loginbo.getHid());
 		if(count == 0) {
 			return "failed";
 		}else {
