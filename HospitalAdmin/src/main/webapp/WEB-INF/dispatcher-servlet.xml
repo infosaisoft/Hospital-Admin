@@ -20,7 +20,13 @@
 		</property>
 
 	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000"></property>
+	</bean>
+	
 	<mvc:resources mapping="/assets/**" location="/assets/" />
+	<mvc:resources mapping="/assets/**" location="/assets/images/" />
 	<mvc:annotation-driven>
 	</mvc:annotation-driven>
 	<context:component-scan

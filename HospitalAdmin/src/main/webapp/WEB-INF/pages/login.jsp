@@ -33,7 +33,7 @@
             <span class="login_head">Login</span>
             <form:form id="login_form" method="post" modelAttribute="loginPage">
 				<div id="successMessage">
-								
+					<p class="alert alert-danger">${result}</p>	
 				</div>
 	            <div class="row">
 	                <div class="col-12">
@@ -61,7 +61,7 @@
 	                    </div>
 	                </div>
 	            </div>
-	            ${result}
+	           
             </form:form>
             
         </div>

@@ -54,20 +54,15 @@ public class LoginController {
 		result = loginservice.verifyUser(logindto);
 		sc.setAttribute("uid", logindto.getAdmin_id());
 		sc.setAttribute("hid", logindto.getHid());
-
-		System.out.println(sc.getAttribute("uid"));
-		System.out.println(result);
-		map.put("result", result);
+		
 		map.put("uid", logindto.getUsername());
 		if (result.equalsIgnoreCase("success")) {
 
 			return "redirect:home";
 
 		}
-
-		pw.println("<p> fail</p>");
-		ra.addAttribute("result", "fail");
-
+		map.put("result", result);
+		
 		return "login";
 	}
 
