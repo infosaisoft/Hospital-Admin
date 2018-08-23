@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
-	@Override
+	/*@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 
@@ -31,5 +31,5 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		}
 	}
-
+*/
 }
