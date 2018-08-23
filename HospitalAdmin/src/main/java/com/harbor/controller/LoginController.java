@@ -42,7 +42,7 @@ public class LoginController {
 		PrintWriter pw = null;
 		LoginDto logindto = null;
 		RequestDispatcher rd = null;
-		RedirectAttributes ra=null;
+		RedirectAttributes ra = null;
 
 		// copy command to dto
 		logindto = new LoginDto();
@@ -50,28 +50,19 @@ public class LoginController {
 		BeanUtils.copyProperties(loginPage, logindto);
 		sc = req.getServletContext();
 
-
-		
-	
 		// Use Service
 		result = loginservice.verifyUser(logindto);
 		sc.setAttribute("uid", logindto.getAdmin_id());
-		sc.setAttribute("hid",logindto.getHid());
+		sc.setAttribute("hid", logindto.getHid());
 		
-		 System.out.println(sc.getAttribute("uid"));
-		System.out.println(result);
-		map.put("result", result);
 		map.put("uid", logindto.getUsername());
 		if (result.equalsIgnoreCase("success")) {
 
 			return "redirect:home";
 
 		}
-		pw.println("<p> fail</p>");
-		ra.addAttribute("result", "fail");
+		map.put("result", result);
 		
-
-
 		return "login";
 	}
 

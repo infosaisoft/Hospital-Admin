@@ -21,11 +21,15 @@ public class LoginDaoImpl implements LoginDao {
 		int count = 0;
 		String adminid=null,hid=null;
 		count = jt.queryForObject(LOGINUSER, Integer.class, loginbo.getUsername(), loginbo.getPassword());
-		adminid=jt.queryForObject(GETADMINID,String.class,loginbo.getUsername(),loginbo.getPassword());
 		
-		hid=jt.queryForObject(GETHID,String.class,loginbo.getUsername(),loginbo.getPassword());
-		loginbo.setAdmin_id(adminid);
-		loginbo.setHid(hid);
+		if(count == 1) {
+			adminid=jt.queryForObject(GETADMINID,String.class,loginbo.getUsername(),loginbo.getPassword());		
+			hid=jt.queryForObject(GETHID,String.class,loginbo.getUsername(),loginbo.getPassword());		
+			loginbo.setAdmin_id(adminid);
+			loginbo.setHid(hid);
+			
+		}
+		
 		System.out.println(loginbo.getAdmin_id());
 		return count;
 	}

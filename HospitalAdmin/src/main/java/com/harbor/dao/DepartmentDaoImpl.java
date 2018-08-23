@@ -36,7 +36,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 		listbo = jt.query(GET_DEPARTMENT_QUERY, new ResultSetExtractor<List<DepartmentBo>>() {
 
-			@Override
 			public List<DepartmentBo> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<DepartmentBo> listbo = new ArrayList<>();
 

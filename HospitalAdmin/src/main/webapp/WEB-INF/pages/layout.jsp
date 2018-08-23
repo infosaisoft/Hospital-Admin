@@ -12,7 +12,7 @@
 
 <!-- css -->
 <link rel="stylesheet" href="<c:url value="/assets/plugins/bootstrap/css/bootstrap.min.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/plugins/font-awesome/css/font-awesome.min.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/plugins/fontawesome/css/all.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
 
 <!-- jQuery-->
