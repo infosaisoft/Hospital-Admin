@@ -30,23 +30,31 @@ public class HomeController {
 
 	@Autowired
 	DepartmentService dptService;
-
+	
+	ServletContext sc =null;
+	
+	
+	    
+	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(Map<String, Object> map, @ModelAttribute("departmentcmd") Departmentcommand departmentcmd,
 			HttpServletRequest req, HttpServletResponse res) {
-		ServletContext sc = null;
-		HospitalDto dto = null;
-		List<DepartmentDto> listdto = null;
 		sc = req.getServletContext();
 		String uid = (String) sc.getAttribute("uid");
 		String hid = (String) sc.getAttribute("hid");
+		HospitalDto dto = null;
+		List<DepartmentDto> listdto = null;
+		
+		if(uid==null) {
+			return "redirect:/login";
+		}
 
 		// copy cmd to dto
 		dto = new HospitalDto();
 		// use service
 		dto = hservice.featchHospitalInfo(hid);
 		listdto = dptService.featchAllDepartment();
-		map.put("listdto",listdto);
+		map.put("listdto", listdto);
 		map.put("uid", uid);
 		map.put("hid", hid);
 		map.put("dto", dto);
@@ -60,7 +68,7 @@ public class HomeController {
 		DepartmentDto dptdto = null;
 		ServletContext sc = null;
 		String result = null;
-		List<DepartmentDto>listdto=null;
+		List<DepartmentDto> listdto = null;
 		HospitalDto dto = null;
 		sc = req.getServletContext();
 		String uid = (String) sc.getAttribute("uid");
@@ -74,10 +82,10 @@ public class HomeController {
 
 		dptdto.setHid(hid);
 		// use service
-        
+
 		dto = hservice.featchHospitalInfo(hid);
 		result = dptService.registrationDepartment(dptdto);
-        listdto=dptService.featchAllDepartment();
+		listdto = dptService.featchAllDepartment();
 		map.put("uid", uid);
 		map.put("hid", hid);
 		map.put("result", result);

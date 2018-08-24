@@ -48,13 +48,16 @@
 								<th>Address</th>
 								<th>Mobile No.</th>
 								<th>Last Login Time</th>
+								<th>adminid</th>
 								<th>Action</th>
+								
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="user" items="${userDto}">
 								<tr>
-									<td></td>
+							
+									<td><img src="assets/images/hospital/${user.photo }" height="50" width="50"></td>
 									<td>${user.fname}</td>
 									<td>${user.lname}</td>
 									<td>${user.nick_name}</td>
@@ -62,13 +65,14 @@
 									<td>${user.address}</td>
 									<td>${user.contact}</td>
 									<td>${user.last_login}</td>
+									<td>${user.admin_id }</td>
 									<td>
 										<button type="button" class="btn btn-primary btn-sm CursorPointer" data-toggle="tooltip" data-placement="top" title="Edit User">
 											<i class="far fa-edit"></i>
 										</button>
-										<button type="button" class="btn btn-danger btn-sm CursorPointer" data-toggle="tooltip" data-placement="top" title="Delete User">
+										<a href="delete_admin?admin_id=${user.admin_id}" class="btn btn-danger btn-sm CursorPointer" data-toggle="tooltip" data-placement="top" title="Delete User">
 											<i class="far fa-trash-alt"></i>
-										</button>
+										</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -87,7 +91,7 @@
 			</table>
 		</div>
 	</div>
-
+ <p>${userResult}</p>
 <script>
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
@@ -114,12 +118,14 @@
 							<div class="form-group">
 								<label>First Name</label> 
 								<form:input class="form-control" path="fname" placeholder="Enter First Name"/>
+								<form:errors path="fname" />
 							</div>
 						</div>
 						<div class="col">
 							<div class="form-group">
 								<label>Last Name</label> 
 								<form:input class="form-control" path="lname" placeholder="Enter Last Name"/>
+								<form:errors path="lname" />
 							</div>
 						</div>
 					</div>
@@ -147,12 +153,14 @@
 							<div class="form-group">
 								<label>Username</label> 
 								<form:input class="form-control" path="username" placeholder="Enter Username"/>
+								<form:errors path="username" />
 							</div>
 						</div>
 						<div class="col">
 							<div class="form-group">
 								<label>Password</label> 
 								<form:password class="form-control" path="password" placeholder="Enter Password"/>
+								<form:errors path="password" />
 							</div>
 						</div>
 					</div>

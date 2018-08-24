@@ -17,7 +17,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
 	DepartmentDao dptDao;
-	@Override
 	public String registrationDepartment(DepartmentDto deptdto) {
 		DepartmentBo dptbo=null;
 		long dptid;
