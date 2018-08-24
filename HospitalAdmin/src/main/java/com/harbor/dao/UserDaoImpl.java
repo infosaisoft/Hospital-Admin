@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -24,7 +25,12 @@ public class UserDaoImpl implements UserDao {
 	
 	private static final String CHACKUSER="SELECT COUNT(*) FROM  hospital_admin WHERE username=?";
 	
+	
 	private static final String DELETEUSER="DELETE  FROM `hospital_admin` WHERE `admin_id`=? ";
+	
+	private static final String COUNTTOTALRECORD="SELECT COUNT(*) FROM hospital_admin ";
+	
+	private static String GETALLUSER="SELECT * FROM  hospital_admin  limit";
 	@Autowired
 	JdbcTemplate jt;
 	
@@ -85,6 +91,53 @@ public class UserDaoImpl implements UserDao {
 		count=jt.update(DELETEUSER,admin_id);
 	
 		return count;
+	}
+	
+	
+	@Override
+	public List<UserBo> reportdata(int startpos, int pagesize) {
+		PagedListHolder< UserBo>page=new PagedListHolder<>();
+	
+		GETALLUSER=	GETALLUSER +startpos+","+pagesize;
+		List<UserBo>listbo=null;
+		
+		listbo=jt.query(GETALLUSER, new ResultSetExtractor<List<UserBo>>() {
+
+			@Override
+			public List<UserBo> extractData(ResultSet rs) throws SQLException, DataAccessException {
+			   List<UserBo>listbo=new ArrayList<>();
+				UserBo userbo=null;
+				while(rs.next()) {
+					userbo=new UserBo();
+					userbo.setAdmin_id(rs.getString(1));
+					userbo.setFname(rs.getString(3));
+					userbo.setLname(rs.getString(4));
+					userbo.setUsername(rs.getString(5));
+					userbo.setPassword(rs.getString(6));
+					userbo.setRole(rs.getString(7));
+					userbo.setNick_name(rs.getString(8));
+					userbo.setGender(rs.getString(9));
+					userbo.setAddress(rs.getString(10));
+					userbo.setContact(rs.getString(11));
+					userbo.setLast_login(rs.getString(12));
+					userbo.setPhoto(rs.getString(13));
+					userbo.setCreation_date(rs.getDate(14));
+					listbo.add(	userbo);
+					
+				}
+				return listbo;
+			}
+			
+		}, startpos,pagesize);
+		return listbo;
+	}
+	
+	@Override
+	public long totalRecordsCount() {
+	long totalrecord=0;
+	
+	totalrecord=jt.queryForObject(COUNTTOTALRECORD, Long.class);
+		return totalrecord;
 	}
 
 }

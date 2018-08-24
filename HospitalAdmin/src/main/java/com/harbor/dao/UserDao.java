@@ -11,5 +11,9 @@ public interface UserDao {
 	public int insertUser(UserBo userbo);
 	
 	public int deleteUsert(String admin_id);
+	
+	public long totalRecordsCount();
+	
+	public List<UserBo> reportdata(int startpos,int pagesize);
 
 }

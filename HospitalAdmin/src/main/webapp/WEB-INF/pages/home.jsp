@@ -13,6 +13,8 @@ ${dto.hid} ${dto.name } ${dto.address } ${dto.city } ${dto.state }
 ${dto.pincode} ${dto.contact } ${dto.reg_number} ${dto.logo }
 ${dto.creation_date }
 <img src="assets/images/hospital/${dto.logo }">
+<a href="delete_dpt?dpt_id=${dto.dpt_id}" class="btn btn-danger btn-sm CursorPointer" data-toggle="tooltip" data-placement="top" title="Delete User"></a>
+											<i class="far fa-trash-alt"></i>
 
 ${filelist}
 

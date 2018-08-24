@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.io.FilenameUtils;
@@ -41,14 +43,13 @@ public class UserController {
 	@RequestMapping(value = "/manage-user", method = RequestMethod.GET)
 	public String manageUser(HttpServletRequest req, Map<String, Object> map,
 			@ModelAttribute("insert_user") UserCommand insert_user) {
-		
 
 		sc = req.getServletContext();
-            String uid=(String) sc.getAttribute("uid");
-                System.out.println(uid);
-            if(uid==null) {
-            	return "redirect:/login";
-            }
+		String uid = (String) sc.getAttribute("uid");
+		System.out.println(uid);
+		if (uid == null) {
+			return "redirect:/login";
+		}
 		String hid = (String) sc.getAttribute("hid");
 
 		List<UserDto> userdto = null;
@@ -92,17 +93,19 @@ public class UserController {
 		filename = userPhoto.getOriginalFilename();
 		String fname = String.valueOf(CustomIdGenerator.getID());
 		String ext = FilenameUtils.getExtension(filename);
-		String filename2 = "IMG-" + fname + "."+ext;
+		String filename2 = "IMG-" + fname + "." + ext;
 
 		try {
 
 			String imgPath = "/assests/images/hospital/";
-			//File file=new File("D:\\Hospital-Admin\\Hospital-Admin\\HospitalAdmin\\src\\main\\webapp\\assets\\images\\hospital\\");
-			File file=new File("D:\\Hospital-Admin\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\HospitalAdmin\\assets\\images\\hospital\\");
-			
+			// File file=new
+			// File("D:\\Hospital-Admin\\Hospital-Admin\\HospitalAdmin\\src\\main\\webapp\\assets\\images\\hospital\\");
+			File file = new File(
+					"D:\\Hospital-Admin\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\HospitalAdmin\\assets\\images\\hospital\\");
+
 			System.out.println(file.getAbsolutePath());
-			os = new FileOutputStream(file+"\\"+filename2);
-			
+			os = new FileOutputStream(file + "\\" + filename2);
+
 			is = userPhoto.getInputStream();
 
 			// perform file copy operation
@@ -166,6 +169,54 @@ public class UserController {
 		System.out.println(delete);
 		map.put("delete", delete);
 		return "manage-user";
+	}
+
+	@RequestMapping(value = "/userdetalis", method = RequestMethod.GET)
+	public String getUserDetalis(HttpServletRequest req, HttpServletResponse res,Map<String,Object>map,@ModelAttribute("insert_user") UserCommand insert_user) {
+		HttpSession ses=req.getSession(true);
+		int pagesize = 10;
+		int pageno = 5;
+		List<UserDto> listdto = null;
+		int pagecount=4;
+		return "user_report";
+
+	}
+	
+	@RequestMapping(value="/userdetalis", method = RequestMethod.POST)
+	public String userinput(Map<String,Object>map,HttpServletRequest req,HttpServletResponse res) {
+		HttpSession ses = null;
+		int pagesize = 10;
+		int pageno = 5;
+		List<UserDto> listdto = null;
+		int pagecount=2;
+		
+		ses=req.getSession(true);
+		System.out.println(req.getParameter("size"));
+		if(req.getParameter("size")==null) {
+			pagesize=(int) ses.getAttribute("psize");
+		}
+		else {
+			pagesize=Integer.parseInt(req.getParameter("size"));
+			ses.setAttribute("psize", pagesize);
+		}
+		
+		
+		if(req.getParameter("pageno")==null) {
+			pageno=1;
+		}
+		else {
+			pageno=Integer.parseInt(req.getParameter("pageno"));
+		}
+	
+		
+		//use service
+			listdto=userser.getAllUser(pageno, pagesize);
+			pagecount=userser.getpageCount(pagesize);
+		
+			//keep  pagecount and listdto in request scope
+			req.setAttribute("listdto",listdto);
+	    
+		return "user_report";
 	}
 
 }

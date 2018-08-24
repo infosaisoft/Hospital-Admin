@@ -14,28 +14,26 @@ import com.harbor.dto.UserDto;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	UserDao userdao;
-	
+
 	@Override
 	public List<UserDto> getUser(String hid) {
-		
+
 		List<UserBo> listuserbo = null;
-		List<UserDto> listuserdto = new ArrayList<>();		
-		
-		//use dao
+		List<UserDto> listuserdto = new ArrayList<>();
+
+		// use dao
 		listuserbo = userdao.getUser(hid);
-		listuserbo.forEach(userbo->{
-			
-			UserDto dto=new UserDto();
-			
+		listuserbo.forEach(userbo -> {
+
+			UserDto dto = new UserDto();
+
 			BeanUtils.copyProperties(userbo, dto);
-			 listuserdto.add(dto);
+			listuserdto.add(dto);
 		});
-		
-		  
-		
+
 		return listuserdto;
 	}
 
@@ -43,45 +41,78 @@ public class UserServiceImpl implements UserService {
 	public String insertUser(UserDto userdto) {
 		int count = 0;
 		String uid = null;
-		CustomIdGenerator cg=null;
-		String password=null;
+		CustomIdGenerator cg = null;
+		String password = null;
 		uid = String.valueOf(CustomIdGenerator.getID());
-		uid = "AID-"+uid;
-		
-		cg=new CustomIdGenerator();
-		password=cg.generateHash(userdto.getPassword());
-		
+		uid = "AID-" + uid;
+
+		cg = new CustomIdGenerator();
+		password = cg.generateHash(userdto.getPassword());
+
 		// copy dto to bo
-		
+
 		UserBo userbo = new UserBo();
 		BeanUtils.copyProperties(userdto, userbo);
 		userbo.setAdmin_id(uid);
 		userbo.setPassword(password);
-		
+
 		// use DAO
-		
+
 		count = userdao.insertUser(userbo);
-		if(count == 0) {
+		if (count == 0) {
 			return "failed";
-		}		
+		}
 		return "success";
 	}
 
+	@Override
+	public String removeUser(String admin_id) {
+		int count = 0;
+
+		// use dao
+		count = userdao.deleteUsert(admin_id);
+
+		if (count == 0) {
+
+			return "not delete";
+		}
+
+		return "delete";
+	}
+	
+	@Override
+	public int getpageCount(int pagesize) {
+		long recordcount=0;
+		int pagecount=0;
+		recordcount=userdao.totalRecordsCount();
+		pagecount=(int) (recordcount/pagesize);
+		
+		if(recordcount%pagecount!=0) {
+			pagecount++;
+			
+			return pagecount;
+		}
+		return pagecount;
+	}
 	
 	
 	@Override
-	public String removeUser(String admin_id) {
-		int count=0;
+	public List<UserDto> getAllUser(int pageno,int pagesize) {
+		int startpos=0;
+		List<UserDto>listdto=new ArrayList<>();
+		List<UserBo>listbo=null;
 		
-		//use dao
-		count=userdao.deleteUsert(admin_id);
+		//start postion
+		startpos=(pageno*pagesize)-pagesize;
+		listbo=userdao.reportdata(startpos, pagesize);
 		
-		if(count==0) {
-			
-			return "not delete";
-		}
+		//covert listdomain to listdto
 		
-		
-		return "delete";
+		listbo.forEach(bo->{
+			UserDto userdto=new UserDto();
+			BeanUtils.copyProperties(bo, userdto);
+			listdto.add(userdto);
+		});
+		return listdto;
 	}
 }
