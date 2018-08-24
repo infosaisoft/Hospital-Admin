@@ -86,11 +86,25 @@ public class HomeController {
 		dto = hservice.featchHospitalInfo(hid);
 		result = dptService.registrationDepartment(dptdto);
 		listdto = dptService.featchAllDepartment();
+		System.out.println(listdto);
 		map.put("uid", uid);
 		map.put("hid", hid);
 		map.put("result", result);
 		map.put("dto", dto);
 		map.put("listdto", listdto);
+		return "home";
+	}
+	
+	
+	@RequestMapping(value = "/delete_dpt", method = RequestMethod.POST)
+	public String deleteDepartment(Map<String, Object> map, @ModelAttribute("departmentcmd") Departmentcommand departmentcmd,
+			HttpServletRequest req) {
+		String dpt_id=req.getParameter("dpt_id");
+		String delete=null;
+		//use service
+		delete=dptService.removeDept(dpt_id);
+		
+		map.put("delete", delete);
 		return "home";
 	}
 
